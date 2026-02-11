@@ -2,62 +2,78 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OnlyNote Web</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="toolbar">
+<header class="topbar">
 
-        <!-- LEFT SIDE: Text Formatting -->
-        <div class="toolbar-left">
-            <button id="bold" class="toggle"><b>B</b></button>
-            <button id="italic" class="toggle"><i>I</i></button>
-            <button id="underline" class="toggle"><u>U</u></button>
+    <!-- Left Tools -->
+    <div class="left-tools">
 
-            <label for="fontSize">Font Size:</label>
-            <select id="fontSize">
-                <option value="14">14px</option>
-                <option value="16" selected>16px</option>
-                <option value="18">18px</option>
-                <option value="20">20px</option>
-                <option value="24">24px</option>
-                <option value="28">28px</option>
-                <option value="32">32px</option>
-                <option value="36">36px</option>
-            </select>
-
-            <label for="textColor">Text Color:</label>
-            <select id="textColor">
-                <option value="black">Black</option>
-                <option value="blue">Blue</option>
-                <option value="red">Red</option>
-                <option value="green">Green</option>
-            </select>
-        </div>
-
-        <!-- RIGHT SIDE: File Menu + Mode -->
-        <div class="toolbar-right">
-
-            <div class="dropdown">
-                <button class="dropbtn">File</button>
-                <div class="dropdown-content">
-                    <button id="save">Save</button>
-                    <button id="saveAs">Save As</button>
-                    <button id="open">Open</button>
-                    <input type="file" id="openFile" accept=".on" style="display:none;">
-                </div>
+        <!-- File Dropdown -->
+        <div class="dropdown">
+            <button class="menu-btn">File ▾</button>
+            <div class="dropdown-content">
+                <button id="newFile">New</button>
+                <button id="openFile">Open</button>
+                <button id="saveFile">Save</button>
+                <button id="saveAsFile">Save As</button>
+                <hr>
+                <button id="exportTxt">Export as .txt</button>
+                <button id="exportHtml">Export as .html</button>
             </div>
-
-            <button id="mode">Dark Mode</button>
-
         </div>
+
+        <!-- Font Size -->
+        <select id="fontSize">
+            <option value="12">12</option>
+            <option value="14">14</option>
+            <option value="16" selected>16</option>
+            <option value="18">18</option>
+            <option value="20">20</option>
+            <option value="24">24</option>
+            <option value="28">28</option>
+            <option value="32">32</option>
+        </select>
+
+        <!-- Formatting Buttons -->
+        <button id="boldBtn" class="format-btn"><b>B</b></button>
+        <button id="italicBtn" class="format-btn"><i>I</i></button>
+        <button id="underlineBtn" class="format-btn"><u>U</u></button>
+
+        <!-- Color Dropdown -->
+        <select id="textColor">
+            <option value="black" style="color:black;">⬤ Black</option>
+            <option value="blue" style="color:blue;">⬤ Blue</option>
+            <option value="red" style="color:red;">⬤ Red</option>
+            <option value="green" style="color:green;">⬤ Green</option>
+        </select>
+
     </div>
 
-    <!-- Editor -->
-    <div id="editor" contenteditable="true"></div>
+    <!-- Right Tools -->
+    <div class="right-tools">
 
-    <script src="script.js"></script>
+        <!-- Save Status -->
+        <span id="saveStatus" class="saved">Saved ✔</span>
+
+        <!-- Theme Toggle -->
+        <button id="themeToggle">Dark Mode</button>
+
+    </div>
+
+</header>
+
+<!-- Editor -->
+<div id="editor"
+     contenteditable="true"
+     class="editor"
+     spellcheck="false">
+</div>
+
+<script src="script.js"></script>
+
 </body>
 </html>
