@@ -49,7 +49,7 @@ couleurSelect.addEventListener("change", () => {
 // === Mode sombre / clair ===
 modeBtn.addEventListener("click", () => {
     document.body.classList.toggle("dark-mode");
-    modeBtn.textContent = document.body.classList.contains("dark-mode") ? "Mode clair" : "Mode sombre";
+    modeBtn.textContent = document.body.classList.contains("dark-mode") ? "Light Mode" : "Dark Mode";
 });
 
 // === Mise à jour des boutons actifs selon curseur ===
@@ -110,3 +110,4 @@ openFileInput.addEventListener("change", (e) => {
         alert("Veuillez sélectionner un fichier .on valide !");
     }
 });
+
