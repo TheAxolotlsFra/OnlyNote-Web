@@ -1,22 +1,23 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OnlyNote Web</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="toolbar">
-        <!-- Partie gauche : styles -->
+
+        <!-- LEFT SIDE: Text Formatting -->
         <div class="toolbar-left">
-            <button id="gras" class="toggle"><b>B</b></button>
-            <button id="italique" class="toggle"><i>I</i></button>
+            <button id="bold" class="toggle"><b>B</b></button>
+            <button id="italic" class="toggle"><i>I</i></button>
             <button id="underline" class="toggle"><u>U</u></button>
 
-
-            <label for="taille">Font Size :</label>
-            <select id="taille">
+            <label for="fontSize">Font Size:</label>
+            <select id="fontSize">
                 <option value="14">14px</option>
                 <option value="16" selected>16px</option>
                 <option value="18">18px</option>
@@ -27,17 +28,18 @@
                 <option value="36">36px</option>
             </select>
 
-            <label for="couleur">Text Color :</label>
-            <select id="couleur">
-                <option value="black" style="color:black;">Black</option>
-                <option value="blue" style="color:blue;">Blue</option>
-                <option value="red" style="color:red;">Red</option>
-                <option value="green" style="color:green;">Green</option>
+            <label for="textColor">Text Color:</label>
+            <select id="textColor">
+                <option value="black">Black</option>
+                <option value="blue">Blue</option>
+                <option value="red">Red</option>
+                <option value="green">Green</option>
             </select>
         </div>
 
-        <!-- Partie droite : menu fichier + mode -->
+        <!-- RIGHT SIDE: File Menu + Mode -->
         <div class="toolbar-right">
+
             <div class="dropdown">
                 <button class="dropbtn">File</button>
                 <div class="dropdown-content">
@@ -47,15 +49,15 @@
                     <input type="file" id="openFile" accept=".on" style="display:none;">
                 </div>
             </div>
+
             <button id="mode">Dark Mode</button>
+
         </div>
     </div>
 
-    <!-- Zone de texte principale -->
-    <div id="editor" contenteditable="true" class="TextArea"></div>
+    <!-- Editor -->
+    <div id="editor" contenteditable="true"></div>
 
     <script src="script.js"></script>
 </body>
 </html>
-
-
