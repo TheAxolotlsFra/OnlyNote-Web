@@ -1,13 +1,20 @@
+// === Récupération des éléments ===
 const editor = document.getElementById("editor");
 const tailleSelect = document.getElementById("taille");
 const grasBtn = document.getElementById("gras");
 const italiqueBtn = document.getElementById("italique");
+const underlineBtn = document.getElementById("underline");
 const couleurSelect = document.getElementById("couleur");
 const modeBtn = document.getElementById("mode");
 
+const saveBtn = document.getElementById("save");
+const saveAsBtn = document.getElementById("saveAs");
+const openBtn = document.getElementById("open");
+const openFileInput = document.getElementById("openFile");
+
 let currentFileName = null; // nom du fichier ouvert
 
-// ===== Taille =====
+// === Taille de police ===
 tailleSelect.addEventListener("change", () => {
     const taille = tailleSelect.value;
     document.execCommand("fontSize", false, "7"); // workaround execCommand
@@ -17,7 +24,7 @@ tailleSelect.addEventListener("change", () => {
     });
 });
 
-// ===== Gras / Italique =====
+// === Gras, Italique, Souligné ===
 grasBtn.addEventListener("click", () => {
     document.execCommand("bold", false, null);
     grasBtn.classList.toggle("active");
@@ -28,32 +35,34 @@ italiqueBtn.addEventListener("click", () => {
     italiqueBtn.classList.toggle("active");
 });
 
-// ===== Couleur =====
+underlineBtn.addEventListener("click", () => {
+    document.execCommand("underline", false, null);
+    underlineBtn.classList.toggle("active");
+});
+
+// === Couleur ===
 couleurSelect.addEventListener("change", () => {
     const couleur = couleurSelect.value;
     document.execCommand("foreColor", false, couleur);
 });
 
-// ===== Mode sombre / clair =====
+// === Mode sombre / clair ===
 modeBtn.addEventListener("click", () => {
     document.body.classList.toggle("dark-mode");
     modeBtn.textContent = document.body.classList.contains("dark-mode") ? "Mode clair" : "Mode sombre";
 });
 
-// ===== Mise à jour boutons selon curseur =====
+// === Mise à jour des boutons actifs selon curseur ===
 editor.addEventListener("keyup", updateButtons);
 editor.addEventListener("mouseup", updateButtons);
 
 function updateButtons() {
     document.queryCommandState('bold') ? grasBtn.classList.add('active') : grasBtn.classList.remove('active');
     document.queryCommandState('italic') ? italiqueBtn.classList.add('active') : italiqueBtn.classList.remove('active');
+    document.queryCommandState('underline') ? underlineBtn.classList.add('active') : underlineBtn.classList.remove('active');
 }
 
-// ===== Save / Save As / Open =====
-const saveBtn = document.getElementById("save");
-const saveAsBtn = document.getElementById("saveAs");
-const openBtn = document.getElementById("open");
-const openFileInput = document.getElementById("openFile");
+// === Sauvegarder / Save As / Ouvrir ===
 
 // --- Save ---
 saveBtn.addEventListener("click", () => {
@@ -75,6 +84,7 @@ function saveAs() {
     saveFile(filename);
 }
 
+// --- Fonction pour sauvegarder le fichier ---
 function saveFile(filename) {
     const content = editor.innerHTML;
     const blob = new Blob([content], {type: "text/plain"});
