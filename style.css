@@ -1,7 +1,5 @@
 /* ============================= */
 /* ROOT VARIABLES (LIGHT MODE)  */
-/* ============================= */
-
 :root {
     --bg-main: #f4f6f8;
     --bg-toolbar: #ffffff;
@@ -17,10 +15,7 @@
     --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* ============================= */
-/* DARK MODE VARIABLES          */
-/* ============================= */
-
+/* DARK MODE VARIABLES */
 body.dark {
     --bg-main: #1e2228;
     --bg-toolbar: #2a2f36;
@@ -37,12 +32,8 @@ body.dark {
 }
 
 /* ============================= */
-/* GLOBAL                       */
-/* ============================= */
-
-* {
-    box-sizing: border-box;
-}
+/* GLOBAL */
+* { box-sizing: border-box; }
 
 body {
     margin: 0;
@@ -55,9 +46,7 @@ body {
 }
 
 /* ============================= */
-/* TOPBAR                       */
-/* ============================= */
-
+/* TOPBAR */
 .topbar {
     background: var(--bg-toolbar);
     box-shadow: var(--shadow);
@@ -75,9 +64,7 @@ body {
 }
 
 /* ============================= */
-/* BUTTONS                      */
-/* ============================= */
-
+/* BUTTONS */
 button {
     background: var(--bg-editor);
     border: 1px solid var(--border);
@@ -87,25 +74,32 @@ button {
     font-size: 14px;
     color: var(--text-main);
     transition: all 0.2s ease;
+    position: relative;
 }
 
 button:hover {
     background: var(--bg-hover);
 }
 
-button.active {
-    background: var(--accent);
-    color: white;
+/* ACTIVE FORMATTING BUTTONS (lighter background) */
+button.format-btn.active {
+    background: rgba(74, 144, 226, 0.15); /* light blue tint in light mode */
+    color: var(--accent);
     border-color: var(--accent);
 }
 
-/* ============================= */
-/* DROPDOWN MENU (CLICK BASED)  */
-/* ============================= */
+/* Lighter active state for dark mode */
+body.dark button.format-btn.active {
+    background: rgba(93, 169, 255, 0.2); /* light blue tint in dark mode */
+}
 
+/* ============================= */
+/* DROPDOWN MENU */
 .dropdown {
     position: relative;
 }
+
+.menu-btn { font-weight: 500; }
 
 .dropdown-content {
     display: none;
@@ -121,16 +115,13 @@ button.active {
     z-index: 1000;
 }
 
-.dropdown-content.show {
-    display: block;
-}
-
 .dropdown-content button {
     width: 100%;
     border: none;
     background: none;
     text-align: left;
     padding: 8px 14px;
+    border-radius: 0;
 }
 
 .dropdown-content button:hover {
@@ -143,10 +134,10 @@ button.active {
     margin: 6px 0;
 }
 
-/* ============================= */
-/* SELECTS                      */
-/* ============================= */
+.dropdown-content.show { display: block; }
 
+/* ============================= */
+/* SELECTS */
 select {
     background: var(--bg-editor);
     border: 1px solid var(--border);
@@ -155,29 +146,26 @@ select {
     font-size: 14px;
     color: var(--text-main);
     cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+select:hover {
+    background: var(--bg-hover);
 }
 
 /* ============================= */
-/* SAVE STATUS                  */
-/* ============================= */
-
+/* SAVE STATUS */
 #saveStatus {
     font-size: 14px;
     color: var(--text-secondary);
+    transition: all 0.3s ease;
 }
 
-#saveStatus.saving {
-    color: orange;
-}
-
-#saveStatus.saved {
-    color: #2ecc71;
-}
+#saveStatus.saved { color: #2ecc71; }
+#saveStatus.unsaved { color: #e67e22; }
 
 /* ============================= */
-/* EDITOR                       */
-/* ============================= */
-
+/* EDITOR */
 .editor {
     flex: 1;
     margin: 20px;
@@ -189,9 +177,29 @@ select {
     outline: none;
     font-size: 16px;
     line-height: 1.6;
+    transition: background 0.3s ease;
+    scroll-behavior: smooth;
 }
 
+/* Placeholder */
 .editor:empty:before {
     content: "Start typing here...";
     color: var(--text-secondary);
+}
+
+/* ============================= */
+/* SCROLLBAR */
+.editor::-webkit-scrollbar { width: 10px; }
+.editor::-webkit-scrollbar-track { background: transparent; }
+.editor::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 10px;
+}
+.editor::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+/* ============================= */
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .topbar { flex-direction: column; gap: 10px; align-items: flex-start; }
+    .editor { margin: 10px; }
 }
