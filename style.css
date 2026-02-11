@@ -74,6 +74,54 @@ body.dark-mode #editor {
     border: 1px solid #555;
 }
 
+.toolbar-right .dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    padding: 6px 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    background-color: #e0e0e0;
+    cursor: pointer;
+}
+
+.dropbtn:hover {
+    background-color: #c8c8c8;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #f9f9f9;
+    min-width: 120px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    z-index: 1;
+    flex-direction: column;
+}
+
+.dropdown-content button {
+    width: 100%;
+    padding: 8px;
+    text-align: left;
+    border: none;
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+
+.dropdown-content button:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: flex;
+}
+
+
 body.dark-mode option[value="black"] { color: #eee; }
 body.dark-mode option[value="blue"] { color: #7fbfff; }
 body.dark-mode option[value="red"] { color: #ff7f7f; }
