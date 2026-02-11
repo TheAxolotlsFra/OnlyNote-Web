@@ -16,19 +16,19 @@
         <div class="dropdown">
             <button class="menu-btn">File ▾</button>
             <div class="dropdown-content">
-                <button id="newFile">New</button>
-                <button id="openFile">Open</button>
-                <button id="saveFile">Save</button>
+                <button id="newFile">New (Ctrl+N)</button>
+                <button id="openFile">Open (Ctrl+O)</button>
+                <button id="saveFile">Save (Ctrl+S)</button>
                 <button id="saveAsFile">Save As</button>
                 <hr>
                 <button id="exportTxt">Export as .txt</button>
                 <button id="exportHtml">Export as .html</button>
-                <button id="exportPdf">Export as .pdf</button>
+                <button id="exportPdf">Export as PDF (Ctrl+P)</button>
             </div>
         </div>
 
         <!-- Font Size -->
-        <select id="fontSize">
+        <select id="fontSize" title="Font size">
             <option value="12">12</option>
             <option value="14">14</option>
             <option value="16" selected>16</option>
@@ -40,12 +40,12 @@
         </select>
 
         <!-- Formatting Buttons -->
-        <button id="boldBtn" class="format-btn"><b>B</b></button>
-        <button id="italicBtn" class="format-btn"><i>I</i></button>
-        <button id="underlineBtn" class="format-btn"><u>U</u></button>
+        <button id="boldBtn" class="format-btn" title="Bold (Ctrl+B)"><b>B</b></button>
+        <button id="italicBtn" class="format-btn" title="Italic (Ctrl+I)"><i>I</i></button>
+        <button id="underlineBtn" class="format-btn" title="Underline (Ctrl+U)"><u>U</u></button>
 
         <!-- Color Dropdown -->
-        <select id="textColor">
+        <select id="textColor" title="Text color">
             <option value="black" style="color:black;">⬤ Black</option>
             <option value="blue" style="color:blue;">⬤ Blue</option>
             <option value="red" style="color:red;">⬤ Red</option>
@@ -61,20 +61,15 @@
         <span id="saveStatus" class="saved">Saved ✔</span>
 
         <!-- Theme Toggle -->
-        <button id="themeToggle">Dark Mode</button>
+        <button id="themeToggle" title="Toggle Dark/Light Mode">Dark Mode</button>
 
     </div>
 
 </header>
 
 <!-- Editor -->
-<div id="editor"
-     contenteditable="true"
-     class="editor"
-     spellcheck="false">
-</div>
+<div id="editor" contenteditable="true" class="editor" spellcheck="false"></div>
 
 <script src="script.js"></script>
-
 </body>
 </html>
