@@ -4,10 +4,8 @@ const grasBtn = document.getElementById("gras");
 const italiqueBtn = document.getElementById("italique");
 const couleurSelect = document.getElementById("couleur");
 const modeBtn = document.getElementById("mode");
-const saveBtn = document.getElementById("save");
-const openBtn = document.getElementById("open");
-const openFileInput = document.getElementById("openFile");
-const body = document.body;
+
+let currentFileName = null; // nom du fichier ouvert
 
 // ===== Taille =====
 tailleSelect.addEventListener("change", () => {
@@ -24,6 +22,7 @@ grasBtn.addEventListener("click", () => {
     document.execCommand("bold", false, null);
     grasBtn.classList.toggle("active");
 });
+
 italiqueBtn.addEventListener("click", () => {
     document.execCommand("italic", false, null);
     italiqueBtn.classList.toggle("active");
@@ -37,8 +36,8 @@ couleurSelect.addEventListener("change", () => {
 
 // ===== Mode sombre / clair =====
 modeBtn.addEventListener("click", () => {
-    body.classList.toggle("dark-mode");
-    modeBtn.textContent = body.classList.contains("dark-mode") ? "Light Mode" : "Dark Mode";
+    document.body.classList.toggle("dark-mode");
+    modeBtn.textContent = document.body.classList.contains("dark-mode") ? "Mode clair" : "Mode sombre";
 });
 
 // ===== Mise à jour boutons selon curseur =====
@@ -50,24 +49,51 @@ function updateButtons() {
     document.queryCommandState('italic') ? italiqueBtn.classList.add('active') : italiqueBtn.classList.remove('active');
 }
 
-// ===== Sauvegarder fichier .on =====
+// ===== Save / Save As / Open =====
+const saveBtn = document.getElementById("save");
+const saveAsBtn = document.getElementById("saveAs");
+const openBtn = document.getElementById("open");
+const openFileInput = document.getElementById("openFile");
+
+// --- Save ---
 saveBtn.addEventListener("click", () => {
+    if (!currentFileName) {
+        saveAs();
+    } else {
+        saveFile(currentFileName);
+    }
+});
+
+// --- Save As ---
+saveAsBtn.addEventListener("click", saveAs);
+
+function saveAs() {
+    let filename = prompt("Entrez le nom du fichier :", currentFileName || "document.on");
+    if (!filename) return; // annuler
+    if (!filename.endsWith(".on")) filename += ".on";
+    currentFileName = filename;
+    saveFile(filename);
+}
+
+function saveFile(filename) {
     const content = editor.innerHTML;
     const blob = new Blob([content], {type: "text/plain"});
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = "document.on";
+    link.download = filename;
     link.click();
-});
+}
 
-// ===== Ouvrir fichier .on =====
+// --- Open ---
 openBtn.addEventListener("click", () => openFileInput.click());
+
 openFileInput.addEventListener("change", (e) => {
     const file = e.target.files[0];
     if(file && file.name.endsWith(".on")){
         const reader = new FileReader();
         reader.onload = (ev) => {
             editor.innerHTML = ev.target.result;
+            currentFileName = file.name;
         }
         reader.readAsText(file);
     } else {
