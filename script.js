@@ -19,12 +19,12 @@ const saveAsBtn = document.getElementById("saveAsFile");
 const openBtn = document.getElementById("openFile");
 const exportTxtBtn = document.getElementById("exportTxt");
 const exportHtmlBtn = document.getElementById("exportHtml");
+const exportPdfBtn = document.getElementById("exportPdf");
 
 const saveStatus = document.getElementById("saveStatus");
 
 let currentFileName = null;
 let saveTimeout;
-
 
 // ==========================
 // FILE DROPDOWN (CLICK TOGGLE)
@@ -43,7 +43,6 @@ document.addEventListener("click", (e) => {
         dropdownContent.classList.remove("show");
     }
 });
-
 
 // ==========================
 // TEXT FORMATTING
@@ -65,7 +64,6 @@ textColorSelect.addEventListener("change", () => {
     document.execCommand("foreColor", false, textColorSelect.value);
 });
 
-
 // ==========================
 // DARK / LIGHT MODE
 // ==========================
@@ -86,7 +84,6 @@ themeToggle.addEventListener("click", () => {
         themeToggle.textContent = "Dark Mode";
     }
 });
-
 
 // ==========================
 // FILE SYSTEM
@@ -140,17 +137,18 @@ openBtn.addEventListener("click", () => {
     input.click();
 });
 
-
 // ==========================
 // EXPORT SYSTEM
 // ==========================
 
+// Export TXT
 exportTxtBtn.addEventListener("click", () => {
     const text = editor.innerText;
     const blob = new Blob([text], { type: "text/plain" });
     downloadFile(blob, "document.txt");
 });
 
+// Export HTML
 exportHtmlBtn.addEventListener("click", () => {
     const fullHtml = `
 <!DOCTYPE html>
@@ -168,6 +166,43 @@ ${editor.innerHTML}
     downloadFile(blob, "document.html");
 });
 
+// Export PDF
+exportPdfBtn.addEventListener("click", () => {
+    exportToPDF();
+});
+
+function exportToPDF() {
+    const printWindow = window.open("", "_blank");
+
+    const pdfContent = `
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>${currentFileName || "Document"}</title>
+<style>
+    body { font-family: "Segoe UI", Arial, sans-serif; padding: 40px; line-height: 1.6; color: #000; }
+    @media print { body { margin: 0; } }
+</style>
+</head>
+<body>
+${editor.innerHTML}
+<script>
+    window.onload = function() {
+        window.print();
+        window.onafterprint = function() { window.close(); }
+    }
+<\/script>
+</body>
+</html>
+`;
+
+    printWindow.document.open();
+    printWindow.document.write(pdfContent);
+    printWindow.document.close();
+}
+
+// Helper function to download
 function downloadFile(blob, filename) {
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
@@ -175,9 +210,8 @@ function downloadFile(blob, filename) {
     link.click();
 }
 
-
 // ==========================
-// AUTO SAVE + INDICATOR
+// AUTO SAVE + LIVE INDICATOR
 // ==========================
 
 editor.addEventListener("input", () => {
@@ -205,8 +239,7 @@ function showSaved() {
     saveStatus.className = "saved";
 }
 
-
-// Restore on load
+// Restore saved content
 window.addEventListener("load", () => {
     const savedContent = localStorage.getItem("onlynote_content");
     const savedFileName = localStorage.getItem("onlynote_filename");
