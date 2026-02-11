@@ -8,7 +8,7 @@
 <body>
 
     <div class="toolbar">
-        <!-- Partie gauche -->
+        <!-- Partie gauche : styles -->
         <div class="toolbar-left">
             <button id="gras" class="toggle"><b>B</b></button>
             <button id="italique" class="toggle"><i>I</i></button>
@@ -27,22 +27,29 @@
 
             <label for="couleur">Text Color :</label>
             <select id="couleur">
-                <option value="black" style="color:black;">Black</option>
-                <option value="blue" style="color:blue;">Blue</option>
-                <option value="red" style="color:red;">Red</option>
-                <option value="green" style="color:green;">Green</option>
+                <option value="black" style="color:black;">Noir</option>
+                <option value="blue" style="color:blue;">Bleu</option>
+                <option value="red" style="color:red;">Rouge</option>
+                <option value="green" style="color:green;">Vert</option>
             </select>
         </div>
 
-        <!-- Partie droite -->
+        <!-- Partie droite : menu fichier + mode -->
         <div class="toolbar-right">
-            <button id="mode">Dark Mode</button>
-            <button id="save">Save</button>
-            <input type="file" id="openFile" accept=".on" style="display:none;">
-            <button id="open">Open</button>
+            <div class="dropdown">
+                <button class="dropbtn">Fichier</button>
+                <div class="dropdown-content">
+                    <button id="save">Save</button>
+                    <button id="saveAs">Save As</button>
+                    <button id="open">Open</button>
+                    <input type="file" id="openFile" accept=".on" style="display:none;">
+                </div>
+            </div>
+            <button id="mode">Mode sombre</button>
         </div>
     </div>
 
+    <!-- Zone de texte principale -->
     <div id="editor" contenteditable="true" class="TextArea"></div>
 
     <script src="script.js"></script>
