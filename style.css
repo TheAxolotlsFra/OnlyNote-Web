@@ -1,128 +1,197 @@
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    padding: 20px;
-    margin: 0;
-    background-color: #f5f5f5;
-    color: #333;
-    transition: background-color 0.3s, color 0.3s;
+/* ============================= */
+/* ROOT VARIABLES (LIGHT MODE)  */
+/* ============================= */
+
+:root {
+    --bg-main: #f4f6f8;
+    --bg-toolbar: #ffffff;
+    --bg-editor: #ffffff;
+    --bg-hover: #e8ebef;
+
+    --text-main: #1e1e1e;
+    --text-secondary: #555;
+
+    --accent: #4a90e2;
+    --border: #dcdcdc;
+
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.toolbar {
-    margin-bottom: 15px;
+/* ============================= */
+/* DARK MODE VARIABLES          */
+/* ============================= */
+
+body.dark {
+    --bg-main: #1e2228;
+    --bg-toolbar: #2a2f36;
+    --bg-editor: #252a31;
+    --bg-hover: #323842;
+
+    --text-main: #e4e6eb;
+    --text-secondary: #b0b3b8;
+
+    --accent: #5da9ff;
+    --border: #3a3f46;
+
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================= */
+/* GLOBAL                       */
+/* ============================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--bg-main);
+    color: var(--text-main);
+    font-family: "Segoe UI", Roboto, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* ============================= */
+/* TOPBAR                       */
+/* ============================= */
+
+.topbar {
+    background: var(--bg-toolbar);
+    box-shadow: var(--shadow);
+    padding: 12px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
 }
 
-.toolbar-left, .toolbar-right {
+.left-tools,
+.right-tools {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
 }
 
+/* ============================= */
+/* BUTTONS                      */
+/* ============================= */
+
 button {
+    background: var(--bg-editor);
+    border: 1px solid var(--border);
+    border-radius: 10px;
     padding: 6px 12px;
-    font-size: 16px;
     cursor: pointer;
-    border: none;
-    border-radius: 8px;
-    background-color: #e0e0e0;
-    transition: 0.2s;
+    font-size: 14px;
+    color: var(--text-main);
+    transition: all 0.2s ease;
 }
 
 button:hover {
-    background-color: #c8c8c8;
+    background: var(--bg-hover);
 }
 
-button.toggle.active {
-    background-color: #90caf9;
-    color: #fff;
+button.active {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
 }
 
-#taille, #couleur {
-    padding: 5px 10px;
-    font-size: 16px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-}
+/* ============================= */
+/* DROPDOWN MENU (CLICK BASED)  */
+/* ============================= */
 
-#editor {
-    width: 90%;
-    min-height: 85vh;
-    border: 1px solid #ccc;
-    border-radius: 12px;
-    padding: 15px;
-    margin: 0 auto;
-    display: block;
-    overflow: auto;
-    background-color: #fff;
-    color: #000;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    transition: background-color 0.3s, color 0.3s;
-}
-
-body.dark-mode {
-    background-color: #2c2c2c;
-    color: #eee;
-}
-
-body.dark-mode #editor {
-    background-color: #3a3a3a;
-    color: #eee;
-    border: 1px solid #555;
-}
-
-.toolbar-right .dropdown {
+.dropdown {
     position: relative;
-    display: inline-block;
-}
-
-.dropbtn {
-    padding: 6px 12px;
-    font-size: 16px;
-    border-radius: 8px;
-    border: none;
-    background-color: #e0e0e0;
-    cursor: pointer;
-}
-
-.dropbtn:hover {
-    background-color: #c8c8c8;
 }
 
 .dropdown-content {
     display: none;
     position: absolute;
-    right: 0;
-    background-color: #f9f9f9;
-    min-width: 120px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    z-index: 1;
-    flex-direction: column;
+    top: 38px;
+    left: 0;
+    min-width: 180px;
+    background: var(--bg-toolbar);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 6px 0;
+    z-index: 1000;
+}
+
+.dropdown-content.show {
+    display: block;
 }
 
 .dropdown-content button {
     width: 100%;
-    padding: 8px;
-    text-align: left;
     border: none;
-    background-color: #f9f9f9;
-    cursor: pointer;
+    background: none;
+    text-align: left;
+    padding: 8px 14px;
 }
 
 .dropdown-content button:hover {
-    background-color: #ddd;
+    background: var(--bg-hover);
 }
 
-.dropdown:hover .dropdown-content {
-    display: flex;
+.dropdown-content hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 6px 0;
 }
 
+/* ============================= */
+/* SELECTS                      */
+/* ============================= */
 
-body.dark-mode option[value="black"] { color: #eee; }
-body.dark-mode option[value="blue"] { color: #7fbfff; }
-body.dark-mode option[value="red"] { color: #ff7f7f; }
-body.dark-mode option[value="green"] { color: #7fff7f; }
+select {
+    background: var(--bg-editor);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 6px 10px;
+    font-size: 14px;
+    color: var(--text-main);
+    cursor: pointer;
+}
+
+/* ============================= */
+/* SAVE STATUS                  */
+/* ============================= */
+
+#saveStatus {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+#saveStatus.saving {
+    color: orange;
+}
+
+#saveStatus.saved {
+    color: #2ecc71;
+}
+
+/* ============================= */
+/* EDITOR                       */
+/* ============================= */
+
+.editor {
+    flex: 1;
+    margin: 20px;
+    padding: 20px;
+    background: var(--bg-editor);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    overflow-y: auto;
+    outline: none;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.editor:empty:before {
+    content: "Start typing here...";
+    color: var(--text-secondary);
+}
