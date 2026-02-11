@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>OnlyNote Web</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="toolbar">
+        <!-- Partie gauche -->
+        <div class="toolbar-left">
+            <button id="gras" class="toggle"><b>B</b></button>
+            <button id="italique" class="toggle"><i>I</i></button>
+
+            <label for="taille">Font Size :</label>
+            <select id="taille">
+                <option value="14">14px</option>
+                <option value="16" selected>16px</option>
+                <option value="18">18px</option>
+                <option value="20">20px</option>
+                <option value="24">24px</option>
+                <option value="28">28px</option>
+                <option value="32">32px</option>
+                <option value="36">36px</option>
+            </select>
+
+            <label for="couleur">Text Color :</label>
+            <select id="couleur">
+                <option value="black" style="color:black;">Black</option>
+                <option value="blue" style="color:blue;">Blue</option>
+                <option value="red" style="color:red;">Red</option>
+                <option value="green" style="color:green;">Green</option>
+            </select>
+        </div>
+
+        <!-- Partie droite -->
+        <div class="toolbar-right">
+            <button id="mode">Dark Mode</button>
+            <button id="save">Save</button>
+            <input type="file" id="openFile" accept=".on" style="display:none;">
+            <button id="open">Open</button>
+        </div>
+    </div>
+
+    <div id="editor" contenteditable="true" class="TextArea"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
