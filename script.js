@@ -1,10 +1,15 @@
-// === Récupération des éléments ===
+// ==========================
+// ELEMENTS
+// ==========================
 const editor = document.getElementById("editor");
-const tailleSelect = document.getElementById("taille");
-const grasBtn = document.getElementById("gras");
-const italiqueBtn = document.getElementById("italique");
+
+const boldBtn = document.getElementById("bold");
+const italicBtn = document.getElementById("italic");
 const underlineBtn = document.getElementById("underline");
-const couleurSelect = document.getElementById("couleur");
+
+const fontSizeSelect = document.getElementById("fontSize");
+const textColorSelect = document.getElementById("textColor");
+
 const modeBtn = document.getElementById("mode");
 
 const saveBtn = document.getElementById("save");
@@ -12,59 +17,62 @@ const saveAsBtn = document.getElementById("saveAs");
 const openBtn = document.getElementById("open");
 const openFileInput = document.getElementById("openFile");
 
-let currentFileName = null; // nom du fichier ouvert
+let currentFileName = null;
 
-// === Taille de police ===
-tailleSelect.addEventListener("change", () => {
-    const taille = tailleSelect.value;
-    document.execCommand("fontSize", false, "7"); // workaround execCommand
-    editor.querySelectorAll("font[size='7']").forEach(el => {
-        el.removeAttribute('size');
-        el.style.fontSize = taille + "px";
-    });
+
+// ==========================
+// TEXT FORMATTING
+// ==========================
+
+boldBtn.addEventListener("click", () => {
+    document.execCommand("bold");
 });
 
-// === Gras, Italique, Souligné ===
-grasBtn.addEventListener("click", () => {
-    document.execCommand("bold", false, null);
-    grasBtn.classList.toggle("active");
-});
-
-italiqueBtn.addEventListener("click", () => {
-    document.execCommand("italic", false, null);
-    italiqueBtn.classList.toggle("active");
+italicBtn.addEventListener("click", () => {
+    document.execCommand("italic");
 });
 
 underlineBtn.addEventListener("click", () => {
-    document.execCommand("underline", false, null);
-    underlineBtn.classList.toggle("active");
+    document.execCommand("underline");
 });
 
-// === Couleur ===
-couleurSelect.addEventListener("change", () => {
-    const couleur = couleurSelect.value;
-    document.execCommand("foreColor", false, couleur);
+// Font Size
+fontSizeSelect.addEventListener("change", () => {
+    const size = fontSizeSelect.value;
+
+    document.execCommand("fontSize", false, "7");
+
+    editor.querySelectorAll("font[size='7']").forEach(el => {
+        el.removeAttribute("size");
+        el.style.fontSize = size + "px";
+    });
 });
 
-// === Mode sombre / clair ===
+// Text Color
+textColorSelect.addEventListener("change", () => {
+    document.execCommand("foreColor", false, textColorSelect.value);
+});
+
+
+// ==========================
+// DARK / LIGHT MODE
+// ==========================
+
 modeBtn.addEventListener("click", () => {
     document.body.classList.toggle("dark-mode");
-    modeBtn.textContent = document.body.classList.contains("dark-mode") ? "Light Mode" : "Dark Mode";
+
+    modeBtn.textContent =
+        document.body.classList.contains("dark-mode")
+        ? "Light Mode"
+        : "Dark Mode";
 });
 
-// === Mise à jour des boutons actifs selon curseur ===
-editor.addEventListener("keyup", updateButtons);
-editor.addEventListener("mouseup", updateButtons);
 
-function updateButtons() {
-    document.queryCommandState('bold') ? grasBtn.classList.add('active') : grasBtn.classList.remove('active');
-    document.queryCommandState('italic') ? italiqueBtn.classList.add('active') : italiqueBtn.classList.remove('active');
-    document.queryCommandState('underline') ? underlineBtn.classList.add('active') : underlineBtn.classList.remove('active');
-}
+// ==========================
+// FILE SYSTEM
+// ==========================
 
-// === Sauvegarder / Save As / Ouvrir ===
-
-// --- Save ---
+// Save
 saveBtn.addEventListener("click", () => {
     if (!currentFileName) {
         saveAs();
@@ -73,41 +81,76 @@ saveBtn.addEventListener("click", () => {
     }
 });
 
-// --- Save As ---
+// Save As
 saveAsBtn.addEventListener("click", saveAs);
 
 function saveAs() {
-    let filename = prompt("Entrez le nom du fichier :", currentFileName || "document.on");
-    if (!filename) return; // annuler
-    if (!filename.endsWith(".on")) filename += ".on";
+    let filename = prompt("Enter file name:", currentFileName || "document.on");
+    if (!filename) return;
+
+    if (!filename.endsWith(".on")) {
+        filename += ".on";
+    }
+
     currentFileName = filename;
     saveFile(filename);
 }
 
-// --- Fonction pour sauvegarder le fichier ---
+// Save File
 function saveFile(filename) {
     const content = editor.innerHTML;
-    const blob = new Blob([content], {type: "text/plain"});
+    const blob = new Blob([content], { type: "text/plain" });
+
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
     link.download = filename;
     link.click();
 }
 
-// --- Open ---
+// Open
 openBtn.addEventListener("click", () => openFileInput.click());
 
 openFileInput.addEventListener("change", (e) => {
     const file = e.target.files[0];
-    if(file && file.name.endsWith(".on")){
+
+    if (file && file.name.endsWith(".on")) {
         const reader = new FileReader();
-        reader.onload = (ev) => {
-            editor.innerHTML = ev.target.result;
+
+        reader.onload = (event) => {
+            editor.innerHTML = event.target.result;
             currentFileName = file.name;
-        }
+            autoSave(); // save opened file into local storage
+        };
+
         reader.readAsText(file);
     } else {
-        alert("Veuillez sélectionner un fichier .on valide !");
+        alert("Please select a valid .on file.");
     }
 });
 
+
+// ==========================
+// AUTO SAVE SYSTEM
+// ==========================
+
+// Save automatically every 1 second
+setInterval(autoSave, 1000);
+
+function autoSave() {
+    localStorage.setItem("onlynote_content", editor.innerHTML);
+    localStorage.setItem("onlynote_filename", currentFileName);
+}
+
+// Restore when page loads
+window.addEventListener("load", () => {
+    const savedContent = localStorage.getItem("onlynote_content");
+    const savedFileName = localStorage.getItem("onlynote_filename");
+
+    if (savedContent) {
+        editor.innerHTML = savedContent;
+    }
+
+    if (savedFileName) {
+        currentFileName = savedFileName;
+    }
+});
